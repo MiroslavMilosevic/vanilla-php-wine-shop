@@ -5,10 +5,7 @@
 *.obj
 *.elf
 
-.tmp_versions/
-modules.order
-Module.symvers
-Mkfile.old
-dkms.conf
 .env
+.env.example
 /testing
+/consts.php
