@@ -35,9 +35,9 @@ class Database
   {
 
 
-    $this->conn = new \mysqli(getenv('DB_HOST'), getenv('DB_USERNAME'), getenv('DB_PASSWORD'),);
+    $this->conn = new \mysqli(DB_HOST,DB_USERNAME, DB_PASSWORD, DB_DATABASE_NAME);
 		if ( $this->conn->connect_errno ) {
-      throw new Exception(""); die();
+      throw new Exception("could not connect to db"); die();
     }
     // force ut8mb4 encoding
     $this->conn->set_charset('utf8mb4');

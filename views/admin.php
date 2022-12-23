@@ -11,8 +11,10 @@
 <body>
 
     <?php
-        Router::redirectToLoginIfNotAuthenticated($user);
+    require_once(DOCUMENT_ROOT . '/views/header.php');
+    Router::redirectToLoginIfNotAuthenticated($user);
     ?>
+
 
     <h1>Admin</h1>
 </body>

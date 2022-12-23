@@ -32,9 +32,7 @@ class Router
     {
         if (!$user->getAuthenticated()) {
 
-            // needs to be better understod
-            // header("Location: admin-login");
-            header("Location: " . APP_URL . 'admin-login');
+            header("Location: " . APP_URL . '/admin-login');
             die();
         }
     }

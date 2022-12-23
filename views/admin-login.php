@@ -3,7 +3,7 @@
 
 <head>
     <?php
-    Importer::importCSS();
+    Importer::importCSS('admin-login-form.css');
     ?>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,13 +12,18 @@
 </head>
 
 <body>
+    <?php
+     require_once(DOCUMENT_ROOT . '/views/header.php');
+    ?>
     <h1>Admin Login</h1>
-
-
-    <form action="">
-        <?php
-        require_once('include/admin-login-form.php');
-        ?>
+    <form action="<?php echo APP_URL . '/php/w-admin-login' ?>" method="POST">
+        <div class="login">
+            <input type="text" placeholder="Username" id="username" name="username">
+            <input type="password" placeholder="password" id="password" name="password">
+            <input type="submit" value="Log In">
+            <p><?php echo $user->getMessage() ?></p>
+        </div>
+        <div class="shadow"></div>
     </form>
 </body>
 
