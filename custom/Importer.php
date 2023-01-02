@@ -2,7 +2,7 @@
 class Importer
 {
     /**
-     * Extracts path from $_SERVER['REQUEST_URI'] and removes PART_TO_REMOVE_FROM_PATH 
+     * Class for importing static files
      */
     public static function importCSS(string $file_name)
     {
@@ -11,11 +11,18 @@ class Importer
         echo "</style>";
     }
 
-   /**
-     * Extracts path from $_SERVER['REQUEST_URI'] and removes PART_TO_REMOVE_FROM_PATH 
-     */
-    public static function importHeader()
+
+    public static function importJS(string $file_name)
     {
-    require_once(DOCUMENT_ROOT . '/views/header.php');
+        echo "<script>";
+        include(DOCUMENT_ROOT . '/app/public/js/'.trim($file_name));
+        echo "</script>";
     }
+//    /**
+//      * Extracts path from $_SERVER['REQUEST_URI'] and removes PART_TO_REMOVE_FROM_PATH 
+//      */
+//     public static function importHeader()
+//     {
+//     require_once(DOCUMENT_ROOT . '/views/header.php');
+//     }
 }

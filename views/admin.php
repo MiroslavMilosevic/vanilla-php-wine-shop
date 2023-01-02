@@ -9,14 +9,16 @@
 </head>
 
 <body>
-
     <?php
     require_once(DOCUMENT_ROOT . '/views/header.php');
     Router::redirectToLoginIfNotAuthenticated($user);
     ?>
-
-
+    
     <h1>Admin</h1>
+    <a href="admin-add-product">Add Product</a>
+
+
+
 </body>
 
 </html>

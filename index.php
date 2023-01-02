@@ -22,23 +22,32 @@ switch ($path) {
   case '/admin-login':
     require_once(DOCUMENT_ROOT . '/views/admin-login.php');
     break;
-  // internal php logic
+    case '/admin-add-product':
+      require_once(DOCUMENT_ROOT . '/views/admin-add-product.php');
+      break;
+  case '/detail':
+    require_once(DOCUMENT_ROOT . '/views/detail.php');
+    break;
+    // internal php logic
   case '/php/w-admin-login':
     require_once(DOCUMENT_ROOT . '/app/php/w-admin-login.php');
     break;
   case '/php/w-admin-logout':
     require_once(DOCUMENT_ROOT . '/app/php/w-admin-logout.php');
     break;
-  // internal php logic
-  // static content
-  case '/blabla.css':
+    case '/php/w-admin-add-product':
+      require_once(DOCUMENT_ROOT . '/app/php/w-admin-add-product.php');
+      break;
+    // internal php logic
+    // static content
+  case '/img/.css':
     require_once(DOCUMENT_ROOT . '/app/public/css/blabla.css');
     break;
   case '/php/w-admin-logout':
     require_once(DOCUMENT_ROOT . '/app/php/w-admin-logout.php');
     break;
     // static content
-    
+
 
   default:
     echo '404 page';
