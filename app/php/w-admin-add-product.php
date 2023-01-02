@@ -47,8 +47,10 @@ do {
         }
     }
 
+    $target_dir = DOCUMENT_ROOT . '/app/public/img/uploads/';
+    $file_upload_response = FileUploader::uploadFile('fileToUpload', $target_dir , 'test-file-name');
     echo '<pre>';
-    print_r($_FILES);
+    print_r($file_upload_response);
     echo '</pre>';
     // $target_dir = "uploads/";
     // $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);

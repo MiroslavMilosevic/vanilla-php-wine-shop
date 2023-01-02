@@ -4,6 +4,7 @@ require_once(DOCUMENT_ROOT . '/custom/Database.php');
 require_once(DOCUMENT_ROOT . '/custom/Router.php');
 require_once(DOCUMENT_ROOT . '/custom/User.php');
 require_once(DOCUMENT_ROOT . '/custom/Importer.php');
+require_once(DOCUMENT_ROOT . '/custom/FileUploader.php');
 
 
 $path = Router::getPath();
