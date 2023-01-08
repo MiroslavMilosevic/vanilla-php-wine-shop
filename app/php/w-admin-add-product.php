@@ -1,61 +1,38 @@
 <?php
 
-echo '<pre>';
-print_r($_POST);
-echo '</pre>';
-
 $response = [];
-
-
-
+$insert_sucessful = false;
 do {
 
-    if (
-        !isset($_POST['naslov']) ||
-        !isset($_POST['naziv']) ||
-        !isset($_POST['opis']) ||
-        !isset($_POST['cena']) 
-    
-    ) {
-        $response = ['error' => ['all required params must be set']];
+    if (!Product::requiredParamsAreSet(['tip','naslov', 'naziv', 'opis', 'cena'])) {
+        $response['errors'][] = 'all required params must be set';
         break;
     }
 
-    $tmp_post = $_POST;
+    $tip = trim($_POST['tip']);
+    $naslov = trim($_POST['naslov']);
+    $naziv = trim($_POST['naziv']);
+    $opis = trim($_POST['opis']);
+    $cena = trim($_POST['cena']);
 
-    $key_value_pairs = [];
-
-    $index_counter = 1;
-
-    foreach ($tmp_post as $key1 => $p1) {
-
-        $key1 = explode('-', $key1);
-
-        if ($key1[0] == 'fieldname') {
-            foreach ($tmp_post as $key2 => $p2) {
-                $key2 = explode('-', $key2);
-
-                if ($key2[0] == 'value' && $key1[1] == $key2[1] && $p1 != '') {
-                    array_push(
-                        $key_value_pairs,
-                        (["$p1" => ['key' => trim($p1), 'value' => trim($p2), 'index' => trim($index_counter)]])
-                    );
-
-                    $index_counter++;
-                }
-            }
-        }
-    }
+    $key_value_pairs = Product::parseKeyValueInputPairs();
 
     $target_dir = DOCUMENT_ROOT . '/app/public/img/uploads/';
-    $file_upload_response = FileUploader::uploadFile('fileToUpload', $target_dir , 'test-file-name');
-    echo '<pre>';
-    print_r($file_upload_response);
-    echo '</pre>';
-    // $target_dir = "uploads/";
-    // $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
-    // $uploadOk = 1;
-    // $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+    $file_upload_response = FileUploader::uploadFile('fileToUpload', $target_dir, 'test-file-name');
+    // if there were no errors while uploading file, continue insertion of product;
+    if (count($file_upload_response['errors']) > 0) {
+        $response['errors'][] = $file_upload_response['errors'][0];
+        break;
+    }
 
-
+    $insert_sucessful = Product::addProduct($tip,$naslov, $naziv, $opis, $cena, $file_upload_response['file_path'],$key_value_pairs);
 } while (false);
+
+
+if($insert_sucessful){
+    header("Location: " . APP_URL . '/admin');
+}else{
+    $user->setMessage($response['errors'][0]);
+    header("Location: " . APP_URL . '/admin-add-product');
+}
+

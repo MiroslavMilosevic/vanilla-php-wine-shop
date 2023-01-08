@@ -14,6 +14,10 @@
     require_once(DOCUMENT_ROOT . '/views/header.php');
     ?>
     <h1>Home</h1>
+
+    <?php
+  require_once(DOCUMENT_ROOT . '/views/footer.php');
+?>
 </body>
 
 </html>

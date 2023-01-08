@@ -15,10 +15,13 @@
     ?>
     
     <h1>Admin</h1>
-    <a href="admin-add-product">Add Product</a>
+    <p><a href="admin-add-product">Add Product</a></p>
+    <p><a href="admin-delete-product">Delete Product</a></p>
 
 
-
+<?php
+  require_once(DOCUMENT_ROOT . '/views/footer.php');
+?>
 </body>
 
 </html>

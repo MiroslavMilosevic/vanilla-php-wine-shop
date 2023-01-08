@@ -25,6 +25,9 @@
         </div>
         <div class="shadow"></div>
     </form>
+    <?php
+        require_once(DOCUMENT_ROOT . '/views/footer.php');
+    ?>
 </body>
 
 </html>
