@@ -12,11 +12,19 @@
     <?php
     require_once(DOCUMENT_ROOT . '/views/header.php');
     ?>
+  
+  <p><a href="admin">admin</a></p>
     <h1>Add new Product</h1>
     <p id="error-message"><?php echo $user->getMessage() ?></p>
     <form action="<?php echo APP_URL . '/php/w-admin-add-product' ?>" method="POST" enctype="multipart/form-data">
 
-        <input type="text" name="tip" id="tip" placeholder="tip proizvoda" required>
+        <!-- <input type="text" name="tip" id="tip" placeholder="tip proizvoda" required> -->
+        <select name="tip" id="tip">
+            <option value="Vino">Vino</option>
+            <option value="Vino">Spirit</option>
+            <option value="Vino">Dzin</option>
+            <option value="Vino">Rakija</option>
+        </select>
         <br>
         <input type="text" name="naslov" id="naslov" placeholder="naslov" required>
         <br>

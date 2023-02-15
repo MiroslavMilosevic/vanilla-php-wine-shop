@@ -1,10 +1,13 @@
 <?php
+set_time_limit(10);
 require_once($_SERVER['DOCUMENT_ROOT'] . '/vanilla-php-wine-shop/consts.php');
 require_once(DOCUMENT_ROOT . '/custom/Database.php');
 require_once(DOCUMENT_ROOT . '/custom/Router.php');
 require_once(DOCUMENT_ROOT . '/custom/User.php');
 require_once(DOCUMENT_ROOT . '/custom/Importer.php');
 require_once(DOCUMENT_ROOT . '/custom/FileUploader.php');
+require_once(DOCUMENT_ROOT . '/custom/MyModel.php');
+require_once(DOCUMENT_ROOT . '/custom/MyFaker.php');
 
 require_once(DOCUMENT_ROOT . '/app/Models/Product.php');
 
@@ -43,7 +46,15 @@ switch ($path) {
   case '/php/w-admin-add-product':
     require_once(DOCUMENT_ROOT . '/app/php/w-admin-add-product.php');
     break;
+  case '/php/w-admin-delete-product':
+    require_once(DOCUMENT_ROOT . '/app/php/w-admin-delete-product.php');
+    break;
     // internal php logic
+    //exec
+    case '/exec':
+      require_once(DOCUMENT_ROOT . '/app/exec.php');
+      break;
+    //exec
     // static content
     // static content
 

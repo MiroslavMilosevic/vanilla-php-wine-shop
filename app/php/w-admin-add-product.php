@@ -25,7 +25,7 @@ do {
         break;
     }
 
-    $insert_sucessful = Product::addProduct($tip,$naslov, $naziv, $opis, $cena, $file_upload_response['file_path'],$key_value_pairs);
+    $insert_sucessful = Product::insert($tip,$naslov, $naziv, $opis, $cena, $file_upload_response['file_path'],$key_value_pairs);
 } while (false);
 
 
