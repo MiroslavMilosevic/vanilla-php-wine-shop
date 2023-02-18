@@ -1,22 +1,23 @@
 <?php
 class Product implements MyModel
 {
-    public static function faker(){
+    public static function faker()
+    {
 
 
         $conn = Database::instance()->getConn();
 
         $tipovi = ['Vino', 'Spirit', 'Dzin', 'Rakija'];
-        $tip = $tipovi[rand(0,count($tipovi)-1)]; 
+        $tip = $tipovi[rand(0, count($tipovi) - 1)];
 
-        $naslov = MyFaker::generateRandomSentence(1,4, 2,10) . ' ' . uniqid(strval(rand(1,999)));
-        $naziv = MyFaker::generateRandomSentence(2,3, 2,10);
-        $opis = MyFaker::generateRandomSentence(7,25, 1,12);
-     
+        $naslov = MyFaker::generateRandomSentence(1, 4, 2, 10) . ' ' . uniqid(strval(rand(1, 999)));
+        $naziv = MyFaker::generateRandomSentence(2, 3, 2, 10);
+        $opis = MyFaker::generateRandomSentence(7, 25, 1, 12);
+
         $cena = rand(300, 10000);
 
         $sql =
-        "INSERT INTO `product` 
+            "INSERT INTO `products` 
     (
     `id`,
     `tip`, 
@@ -40,15 +41,14 @@ class Product implements MyModel
      '[]',
      '1'
     )";
-echo $sql;
-if ($conn->query($sql) === TRUE) {
-    // echo "New record created successfully";
-    return true;
-} else {
-      echo "Error: " . $sql . "<br>" . $conn->error;
-    return false;
-   
-}
+        echo $sql;
+        if ($conn->query($sql) === TRUE) {
+            // echo "New record created successfully";
+            return true;
+        } else {
+            echo "Error: " . $sql . "<br>" . $conn->error;
+            return false;
+        }
     }
 
     public static function parseKeyValueInputPairs()
@@ -101,9 +101,8 @@ if ($conn->query($sql) === TRUE) {
         $file_path = mysqli_real_escape_string($conn, $file_path);
         $other =  json_encode($other);
 
-
         $sql =
-            "INSERT INTO `product` 
+            "INSERT INTO `products` 
         (
         `id`,
         `tip`, 
@@ -127,7 +126,6 @@ if ($conn->query($sql) === TRUE) {
         );";
 
         if ($conn->query($sql) === TRUE) {
-            // echo "New record created successfully";
             return true;
         } else {
             return false;
@@ -141,21 +139,15 @@ if ($conn->query($sql) === TRUE) {
 
         $current_page = mysqli_real_escape_string($conn, $current_page);
         $items_per_page = mysqli_real_escape_string($conn, $items_per_page);
-        $offset = ($current_page-1) * $items_per_page;
+        $offset = ($current_page - 1) * $items_per_page;
 
         $where_part = '1';
-        if(strlen($search_params)>0){
-            $where_part = "naslov LIKE '%".trim($search_params)."%' || naziv LIKE '%".trim($search_params)."%'";
+        if (strlen($search_params) > 0) {
+            $where_part = "naslov LIKE '%" . trim($search_params) . "%' || naziv LIKE '%" . trim($search_params) . "%'";
         }
 
-        $sql = "SELECT * FROM `product` WHERE $where_part LIMIT 8 OFFSET $offset;";
-
-        echo '<pre>';
-        print_r($sql);
-        echo '</pre>';
-        // die;
+        $sql = "SELECT * FROM `products` WHERE $where_part LIMIT $items_per_page OFFSET $offset;";
         $result = $conn->query($sql);
-
         $products = [];
 
         if ($result->num_rows > 0) {
@@ -167,6 +159,50 @@ if ($conn->query($sql) === TRUE) {
         return $products;
     }
 
+    public static function getOneProduct(int $id): array
+    {
+        $conn = Database::instance()->getConn();
+
+        $id = mysqli_real_escape_string($conn, $id);
+        if (!is_numeric($id)) {
+            return [];
+        }
+        $sql = "SELECT * FROM `products` WHERE id = $id LIMIT 1";
+        $result = $conn->query($sql);
+        $product = [];
+
+        if ($result->num_rows > 0) {
+            // output data of each row
+            while ($row = $result->fetch_assoc()) {
+                $product[] = $row;
+            }
+        }
+        $product = $product[0];
+        $product['ostale_info'] = self::fixAdditionalInfoArray($product);
+        return $product;
+    }
+
+    public static function fixAdditionalInfoArray($arr){
+
+
+        $additional_info = json_decode($arr['ostale_info']);
+        $additional_info = json_decode(json_encode($additional_info), true);
+        if(count($additional_info) <= 0){
+            return [];
+         }
+        $tmp = [];
+        foreach($additional_info as $el){
+  
+            foreach($el as $key){
+                // echo '<pre>';
+                // print_r($key);
+                // echo '</pre>';
+               $tmp = array_merge($tmp, [$key['key'] => $key['value']]);
+            }
+        }
+        return $tmp;
+    }
+
     public static function delete(int $id)
     {
 
@@ -174,10 +210,8 @@ if ($conn->query($sql) === TRUE) {
             return false;
         }
         $conn = Database::instance()->getConn();
-
-        // $sql = "DELETE FROM `product` WHERE `product`.`id` = $id";
         $stmt = $conn->prepare("DELETE FROM `product` WHERE `product`.`id` = ?");
-        if(is_bool($stmt)){
+        if (is_bool($stmt)) {
             return false;
         }
         $stmt->bind_param('i', $id);

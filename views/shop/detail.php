@@ -22,15 +22,20 @@
     Importer::importCSS('detail/animate.min.css');
     Importer::importCSS('detail/owl.carousel.min.css');
     Importer::importCSS('detail/style.css');
- 
     ?>
 
-    <!-- Libraries Stylesheet -->
-    <!-- <link href="lib/animate/animate.min.css" rel="stylesheet">
-    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet"> -->
+    <?php
+    $product = Product::getOneProduct(trim($_GET['pid']));
+    $product = count($product) > 0 ? $product : [];
 
-    <!-- Customized Bootstrap Stylesheet -->
-    <!-- <link href="css/style.css" rel="stylesheet"> -->
+
+
+    echo '<pre>';
+    print_r($product);
+    echo '</pre>';
+
+    // die;
+    ?>
 </head>
 
 <body>
@@ -340,8 +345,9 @@
                     <div class="tab-content">
                         <div class="tab-pane fade show active" id="tab-pane-1">
                             <h4 class="mb-3">Product Description</h4>
-                            <p>Eos no lorem eirmod diam diam, eos elitr et gubergren diam sea. Consetetur vero aliquyam invidunt duo dolores et duo sit. Vero diam ea vero et dolore rebum, dolor rebum eirmod consetetur invidunt sed sed et, lorem duo et eos elitr, sadipscing kasd ipsum rebum diam. Dolore diam stet rebum sed tempor kasd eirmod. Takimata kasd ipsum accusam sadipscing, eos dolores sit no ut diam consetetur duo justo est, sit sanctus diam tempor aliquyam eirmod nonumy rebum dolor accusam, ipsum kasd eos consetetur at sit rebum, diam kasd invidunt tempor lorem, ipsum lorem elitr sanctus eirmod takimata dolor ea invidunt.</p>
-                            <p>Dolore magna est eirmod sanctus dolor, amet diam et eirmod et ipsum. Amet dolore tempor consetetur sed lorem dolor sit lorem tempor. Gubergren amet amet labore sadipscing clita clita diam clita. Sea amet et sed ipsum lorem elitr et, amet et labore voluptua sit rebum. Ea erat sed et diam takimata sed justo. Magna takimata justo et amet magna et.</p>
+                            <p><?php echo $product['opis'] ?></p>
+                            <!-- <p>Eos no lorem eirmod diam diam, eos elitr et gubergren diam sea. Consetetur vero aliquyam invidunt duo dolores et duo sit. Vero diam ea vero et dolore rebum, dolor rebum eirmod consetetur invidunt sed sed et, lorem duo et eos elitr, sadipscing kasd ipsum rebum diam. Dolore diam stet rebum sed tempor kasd eirmod. Takimata kasd ipsum accusam sadipscing, eos dolores sit no ut diam consetetur duo justo est, sit sanctus diam tempor aliquyam eirmod nonumy rebum dolor accusam, ipsum kasd eos consetetur at sit rebum, diam kasd invidunt tempor lorem, ipsum lorem elitr sanctus eirmod takimata dolor ea invidunt.</p>
+                            <p>Dolore magna est eirmod sanctus dolor, amet diam et eirmod et ipsum. Amet dolore tempor consetetur sed lorem dolor sit lorem tempor. Gubergren amet amet labore sadipscing clita clita diam clita. Sea amet et sed ipsum lorem elitr et, amet et labore voluptua sit rebum. Ea erat sed et diam takimata sed justo. Magna takimata justo et amet magna et.</p> -->
                         </div>
                         <div class="tab-pane fade" id="tab-pane-2">
                             <h4 class="mb-3">Additional Information</h4>
@@ -349,9 +355,25 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <ul class="list-group list-group-flush">
-                                        <li class="list-group-item px-0">
+
+                                        <?php
+                                            foreach ($product['ostale_info'] as $key => $value) {
+
+                                            ?>
+                                             <li class="list-group-item px-0">
+                                                <?php echo $key ?> - <?php echo $value ?>    
+                                               </li>
+                                        <?php
+                                            }
+                                        ?>
+
+                                        <!-- <li class="list-group-item px-0">
                                             Sit erat duo lorem duo ea consetetur, et eirmod takimata.
                                         </li>
+                                     
+                                     -->
+
+                                        <!--
                                         <li class="list-group-item px-0">
                                             Amet kasd gubergren sit sanctus et lorem eos sadipscing at.
                                         </li>
@@ -360,7 +382,7 @@
                                         </li>
                                         <li class="list-group-item px-0">
                                             Takimata ea clita labore amet ipsum erat justo voluptua. Nonumy.
-                                        </li>
+                                        </li> -->
                                     </ul>
                                 </div>
                                 <div class="col-md-6">

@@ -33,9 +33,14 @@ switch ($path) {
   case '/admin-delete-product':
     require_once(DOCUMENT_ROOT . '/views/admin-delete-product.php');
     break;
+    // user pages
   case '/detail':
-    require_once(DOCUMENT_ROOT . '/views/detail.php');
+    require_once(DOCUMENT_ROOT . '/views/shop/detail.php');
     break;
+  case '/shop':
+    require_once(DOCUMENT_ROOT . '/views/shop/shop.php');
+    break;
+    // user pages
     // internal php logic
   case '/php/w-admin-login':
     require_once(DOCUMENT_ROOT . '/app/php/w-admin-login.php');
@@ -51,9 +56,9 @@ switch ($path) {
     break;
     // internal php logic
     //exec
-    case '/exec':
-      require_once(DOCUMENT_ROOT . '/app/exec.php');
-      break;
+  case '/exec':
+    require_once(DOCUMENT_ROOT . '/app/exec.php');
+    break;
     //exec
     // static content
     // static content
