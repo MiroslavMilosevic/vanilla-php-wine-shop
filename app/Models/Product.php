@@ -177,27 +177,26 @@ class Product implements MyModel
                 $product[] = $row;
             }
         }
+        if (!isset($product[0])) {
+            return [];
+        }
         $product = $product[0];
         $product['ostale_info'] = self::fixAdditionalInfoArray($product);
         return $product;
     }
 
-    public static function fixAdditionalInfoArray($arr){
-
-
+    public static function fixAdditionalInfoArray($arr)
+    {
         $additional_info = json_decode($arr['ostale_info']);
         $additional_info = json_decode(json_encode($additional_info), true);
-        if(count($additional_info) <= 0){
+        if (count($additional_info) <= 0) {
             return [];
-         }
+        }
         $tmp = [];
-        foreach($additional_info as $el){
-  
-            foreach($el as $key){
-                // echo '<pre>';
-                // print_r($key);
-                // echo '</pre>';
-               $tmp = array_merge($tmp, [$key['key'] => $key['value']]);
+        foreach ($additional_info as $el) {
+
+            foreach ($el as $key) {
+                $tmp = array_merge($tmp, [$key['key'] => $key['value']]);
             }
         }
         return $tmp;
@@ -205,7 +204,6 @@ class Product implements MyModel
 
     public static function delete(int $id)
     {
-
         if (!is_int($id)) {
             return false;
         }
@@ -216,5 +214,24 @@ class Product implements MyModel
         }
         $stmt->bind_param('i', $id);
         return $stmt->execute();
+    }
+
+
+
+    public static function getRandProductsForCarousel()
+    {
+
+        $conn = Database::instance()->getConn();
+        $sql = "SELECT * FROM products
+        ORDER BY RAND()
+        LIMIT ".DETAILS_PAGE_CAROUSEL_NUM_OF_ITEMS."";
+        $result = $conn->query($sql);
+        $products = [];
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $products[] = $row;
+            }
+        }
+        return $products;
     }
 }// class

@@ -36,4 +36,15 @@ class Router
             die();
         }
     }
+
+
+        /**
+     * redirects to login page if user is not authenticated
+     * @return void
+     */
+    public static function redirectTo404()
+    {
+            header("Location: " . APP_URL . '/404-page');
+            die();
+    }
 }

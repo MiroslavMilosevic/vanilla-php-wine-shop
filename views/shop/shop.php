@@ -33,14 +33,14 @@
     }
 
     if (isset($_GET['page']) && is_int(intval($_GET['page'])) && intval($_GET['page']) > 0) {
-        $products = Product::getProductsWithPagination(intval($_GET['page']), 8, $search);
+        $products = Product::getProductsWithPagination(intval($_GET['page']), 9, $search);
     } else {
         $products = Product::getProductsWithPagination(1, 9, $search);
     }
 
-    echo '<pre>';
-    print_r($products);
-    echo '</pre>';
+    // echo '<pre>';
+    // print_r($products);
+    // echo '</pre>';
     ?>
 </head>
 

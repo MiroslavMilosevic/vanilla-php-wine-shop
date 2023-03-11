@@ -1,3 +1,9 @@
+<?php
+$product = Product::getOneProduct(trim($_GET['pid']));
+if (count($product) <= 0) {
+    Router::redirectTo404();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -24,18 +30,7 @@
     Importer::importCSS('detail/style.css');
     ?>
 
-    <?php
-    $product = Product::getOneProduct(trim($_GET['pid']));
-    $product = count($product) > 0 ? $product : [];
 
-
-
-    echo '<pre>';
-    print_r($product);
-    echo '</pre>';
-
-    // die;
-    ?>
 </head>
 
 <body>
@@ -209,7 +204,7 @@
                 <div id="product-carousel" class="carousel slide" data-ride="carousel">
                     <div class="carousel-inner bg-light">
                         <div class="carousel-item active">
-                            <img class="w-100 h-100" src="app/public/img/product-1.jpg" alt="Image">
+                            <img class="w-100 h-100" src="<?php echo explode(IMAGE_PATH_PART_TO_REMOVE, $product['file_path'])[1] ?>" alt="Image">
                         </div>
                         <!-- <div class="carousel-item">
                             <img class="w-100 h-100" src="app/public/img/product-2.jpg" alt="Image">
@@ -232,7 +227,7 @@
 
             <div class="col-lg-7 h-auto mb-30">
                 <div class="h-100 bg-light p-30">
-                    <h3>Product Name Goes Here</h3>
+                    <h3><?php echo $product['naslov'] ?></h3>
                     <div class="d-flex mb-3">
                         <div class="text-primary mr-2">
                             <small class="fas fa-star"></small>
@@ -241,13 +236,11 @@
                             <small class="fas fa-star-half-alt"></small>
                             <small class="far fa-star"></small>
                         </div>
-                        <small class="pt-1">(99 Reviews)</small>
+                        <!-- <small class="pt-1">(99 Reviews)</small> -->
                     </div>
-                    <h3 class="font-weight-semi-bold mb-4">$150.00</h3>
-                    <p class="mb-4">Volup erat ipsum diam elitr rebum et dolor. Est nonumy elitr erat diam stet sit
-                        clita ea. Sanc ipsum et, labore clita lorem magna duo dolor no sea
-                        Nonumy</p>
-                    <div class="d-flex mb-3">
+                    <h3 class="font-weight-semi-bold mb-4">RSD <?php echo $product['cena'] ?>.00</h3>
+                    <p class="mb-4"><?php echo $product['opis'] ?></p>
+                    <!-- <div class="d-flex mb-3">
                         <strong class="text-dark mr-3">Sizes:</strong>
                         <form>
                             <div class="custom-control custom-radio custom-control-inline">
@@ -271,8 +264,8 @@
                                 <label class="custom-control-label" for="size-5">XL</label>
                             </div>
                         </form>
-                    </div>
-                    <div class="d-flex mb-4">
+                    </div> -->
+                    <!-- <div class="d-flex mb-4">
                         <strong class="text-dark mr-3">Colors:</strong>
                         <form>
                             <div class="custom-control custom-radio custom-control-inline">
@@ -296,7 +289,7 @@
                                 <label class="custom-control-label" for="color-5">Green</label>
                             </div>
                         </form>
-                    </div>
+                    </div> -->
                     <div class="d-flex align-items-center mb-4 pt-2">
                         <div class="input-group quantity mr-3" style="width: 130px;">
                             <div class="input-group-btn">
@@ -340,7 +333,7 @@
                     <div class="nav nav-tabs mb-4">
                         <a class="nav-item nav-link text-dark active" data-toggle="tab" href="#tab-pane-1">Description</a>
                         <a class="nav-item nav-link text-dark" data-toggle="tab" href="#tab-pane-2">Information</a>
-                        <a class="nav-item nav-link text-dark" data-toggle="tab" href="#tab-pane-3">Reviews (0)</a>
+                        <!-- <a class="nav-item nav-link text-dark" data-toggle="tab" href="#tab-pane-3">Reviews (0)</a> -->
                     </div>
                     <div class="tab-content">
                         <div class="tab-pane fade show active" id="tab-pane-1">
@@ -351,38 +344,18 @@
                         </div>
                         <div class="tab-pane fade" id="tab-pane-2">
                             <h4 class="mb-3">Additional Information</h4>
-                            <p>Eos no lorem eirmod diam diam, eos elitr et gubergren diam sea. Consetetur vero aliquyam invidunt duo dolores et duo sit. Vero diam ea vero et dolore rebum, dolor rebum eirmod consetetur invidunt sed sed et, lorem duo et eos elitr, sadipscing kasd ipsum rebum diam. Dolore diam stet rebum sed tempor kasd eirmod. Takimata kasd ipsum accusam sadipscing, eos dolores sit no ut diam consetetur duo justo est, sit sanctus diam tempor aliquyam eirmod nonumy rebum dolor accusam, ipsum kasd eos consetetur at sit rebum, diam kasd invidunt tempor lorem, ipsum lorem elitr sanctus eirmod takimata dolor ea invidunt.</p>
+                            <!-- <p>Eos no lorem eirmod diam diam, eos elitr et gubergren diam sea. Consetetur vero aliquyam invidunt duo dolores et duo sit. Vero diam ea vero et dolore rebum, dolor rebum eirmod consetetur invidunt sed sed et, lorem duo et eos elitr, sadipscing kasd ipsum rebum diam. Dolore diam stet rebum sed tempor kasd eirmod. Takimata kasd ipsum accusam sadipscing, eos dolores sit no ut diam consetetur duo justo est, sit sanctus diam tempor aliquyam eirmod nonumy rebum dolor accusam, ipsum kasd eos consetetur at sit rebum, diam kasd invidunt tempor lorem, ipsum lorem elitr sanctus eirmod takimata dolor ea invidunt.</p> -->
                             <div class="row">
                                 <div class="col-md-6">
                                     <ul class="list-group list-group-flush">
 
                                         <?php
-                                            foreach ($product['ostale_info'] as $key => $value) {
-
-                                            ?>
-                                             <li class="list-group-item px-0">
-                                                <?php echo $key ?> - <?php echo $value ?>    
-                                               </li>
-                                        <?php
-                                            }
+                                        foreach ($product['ostale_info'] as $key => $value) {
                                         ?>
-
-                                        <!-- <li class="list-group-item px-0">
-                                            Sit erat duo lorem duo ea consetetur, et eirmod takimata.
-                                        </li>
-                                     
-                                     -->
-
-                                        <!--
-                                        <li class="list-group-item px-0">
-                                            Amet kasd gubergren sit sanctus et lorem eos sadipscing at.
-                                        </li>
-                                        <li class="list-group-item px-0">
-                                            Duo amet accusam eirmod nonumy stet et et stet eirmod.
-                                        </li>
-                                        <li class="list-group-item px-0">
-                                            Takimata ea clita labore amet ipsum erat justo voluptua. Nonumy.
-                                        </li> -->
+                                            <li class="list-group-item px-0">
+                                                <?php echo $key ?> - <?php echo $value ?>
+                                            </li>
+                                        <?php } ?>
                                     </ul>
                                 </div>
                                 <div class="col-md-6">
@@ -461,41 +434,57 @@
         </div>
     </div>
     <!-- Shop Detail End -->
-
-
+    <?php
+    $products_for_carousel = Product::getRandProductsForCarousel();
+    ?>
     <!-- Products Start -->
     <div class="container-fluid py-5">
         <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">You May Also Like</span></h2>
         <div class="row px-xl-5">
             <div class="col">
                 <div class="owl-carousel related-carousel">
-                    <div class="product-item bg-light">
-                        <div class="product-img position-relative overflow-hidden">
-                            <img class="img-fluid w-100" src="app/public/img/product-1.jpg" alt="">
-                            <div class="product-action">
-                                <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
-                                <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
-                                <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
-                                <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
+
+                    <?php
+                    foreach ($products_for_carousel as $pfc) {
+                    ?>
+
+                        <div class="product-item bg-light">- <!--  --- -->
+                            <div class="product-img position-relative overflow-hidden">
+                                <img class="img-fluid w-100" src="<?php echo explode(IMAGE_PATH_PART_TO_REMOVE,$pfc['file_path'])[1]?>" alt="">
+                                <div class="product-action">
+                                    <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
+                                    <!-- <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
+                                    <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a> -->
+                                    <form action="<?php echo APP_URL . '/detail' ?>" method="GET" id="form-<?php echo $pfc['id']?>">
+                                    <input type="hidden" name="pid" value="<?php echo $pfc['id']?>">
+                                    <a 
+                                    class="btn btn-outline-dark btn-square" 
+                                    href="javascript:{}" onclick="document.getElementById('form-<?php echo $pfc['id']?>').submit();" class="btn btn-outline-dark btn-square">
+                                    <i class="fa fa-search"></i></a>
+                                    </form>
+                                </div>
                             </div>
-                        </div>
-                        <div class="text-center py-4">
-                            <a class="h6 text-decoration-none text-truncate" href="">Product Name Goes Here</a>
-                            <div class="d-flex align-items-center justify-content-center mt-2">
-                                <h5>$123.00</h5>
-                                <h6 class="text-muted ml-2"><del>$123.00</del></h6>
+                            <div class="text-center py-4">
+                                <a class="h6 text-decoration-none text-truncate" href=""><?php echo $pfc['naslov']?></a>
+                                <div class="d-flex align-items-center justify-content-center mt-2">
+                                    <h5></h5>
+                                    <h6 class="text-muted ml-2"><del>RSD<?php echo $pfc['cena']?></del></h6>
+                                </div>
+                                <div class="d-flex align-items-center justify-content-center mb-1">
+                                    <small class="fa fa-star text-primary mr-1"></small>
+                                    <small class="fa fa-star text-primary mr-1"></small>
+                                    <small class="fa fa-star text-primary mr-1"></small>
+                                    <small class="fa fa-star text-primary mr-1"></small>
+                                    <small class="fa fa-star text-primary mr-1"></small>
+                                    <small>(99)</small>
+                                </div>
                             </div>
-                            <div class="d-flex align-items-center justify-content-center mb-1">
-                                <small class="fa fa-star text-primary mr-1"></small>
-                                <small class="fa fa-star text-primary mr-1"></small>
-                                <small class="fa fa-star text-primary mr-1"></small>
-                                <small class="fa fa-star text-primary mr-1"></small>
-                                <small class="fa fa-star text-primary mr-1"></small>
-                                <small>(99)</small>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product-item bg-light">
+                        </div> <!--  --- -->
+
+                    <?php
+                    }
+                    ?>
+                    <!-- <div class="product-item bg-light">
                         <div class="product-img position-relative overflow-hidden">
                             <img class="img-fluid w-100" src="app/public/img/product-2.jpg" alt="">
                             <div class="product-action">
@@ -598,7 +587,7 @@
                                 <small>(99)</small>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
