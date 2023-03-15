@@ -374,12 +374,12 @@
                                     <!-- <img class="img-fluid w-100" src="app/public/img/product-1.jpg" alt=""> -->
                                        <img class="img-fluid w-100" src="<?php echo explode(IMAGE_PATH_PART_TO_REMOVE,$product['file_path'])[1]?>" alt="Slika Proizvoda">
                                     <div class="product-action">
-                                        <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
+                                        <a  data-id="<?php echo $product['id']?>" class="btn btn-outline-dark btn-square shoping-chart-link" href="javascript:{}"><i class="fa fa-shopping-cart"></i></a>
                                         <a href="javascript:{}" onclick="document.getElementById('form-<?php echo $product['id']?>').submit();" class="btn btn-outline-dark btn-square" ><i class="fa fa-search"></i></a>
                                     </div>
                                 </div>
                                 <div class="text-center py-4">
-                                    <a class="h6 text-decoration-none text-truncate" href=""><?php echo $product['naslov']?></a>
+                                    <a class="h6 text-decoration-none text-truncate" href="javascript:{}" onclick="document.getElementById('form-<?php echo $product['id']?>').submit();"><?php echo $product['naslov']?></a>
                                     <div class="d-flex align-items-center justify-content-center mt-2">
                                         <h5>RSD<?php echo $product['cena']?></h5>
                                         <h6 class="text-muted ml-2"><del>RSD<?php echo $product['cena']?></del></h6>
@@ -707,6 +707,7 @@
     Importer::importJS('detail/jqBootstrapValidation.min.js');
     Importer::importJS('detail/contact.js');
     Importer::importJS('detail/main.js');
+    Importer::importJS('shop.js');
     ?>
 </body>
 

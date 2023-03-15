@@ -1,0 +1,3 @@
+Filters in shop
+Whole obj should be clickable on shop pages ---> DONE
+Shoping chart
