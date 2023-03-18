@@ -297,15 +297,16 @@ if (count($product) <= 0) {
                                     <i class="fa fa-minus"></i>
                                 </button>
                             </div>
-                            <input type="text" class="form-control bg-secondary border-0 text-center" value="1">
+                            <input type="text" id="num-of-item" data-id="<?= $product['id'] ?>" class="form-control bg-secondary border-0 text-center" value="1">
                             <div class="input-group-btn">
                                 <button class="btn btn-primary btn-plus">
                                     <i class="fa fa-plus"></i>
                                 </button>
                             </div>
                         </div>
-                        <button class="btn btn-primary px-3"><i class="fa fa-shopping-cart mr-1"></i> Add To
-                            Cart</button>
+                        <button class="btn btn-primary px-3" id="add-to-cart-button">
+                            
+                        <i class="fa fa-shopping-cart mr-1"></i> Add To Cart 1</button>
                     </div>
                     <div class="d-flex pt-2">
                         <strong class="text-dark mr-2">Share on:</strong>
@@ -690,6 +691,7 @@ if (count($product) <= 0) {
     Importer::importJS('detail/jqBootstrapValidation.min.js');
     Importer::importJS('detail/contact.js');
     Importer::importJS('detail/main.js');
+    Importer::importJS('detail.js');
     ?>
 </body>
 
